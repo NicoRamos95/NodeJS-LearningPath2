@@ -15,7 +15,7 @@ const commentController = {
     modComment: (req, res) => {
       const {idcomment, content, id} = req.body
 
-      Itinerary.findOneAndUpdate({_id: id}, {$set :{comments: {_id: idcomment, content: content}}}, {new: true})
+      Itinerary.findOneAndUpdate({_id: id, 'comments._id': idcomment}, {$set:{'comments.$.content':content}})
       .then(comment => {
         console.log(comment)
         return res.json({success: true, respuesta: comment})

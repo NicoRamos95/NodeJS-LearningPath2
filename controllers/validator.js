@@ -12,11 +12,15 @@ const validator = {
             country: Joi.string()
         })
         const validation = schema.validate(req.body, {abortEarly: false})
-        console.log(validation)
         if (!validation.error) {
             next()
         } else {
-            res.json({success: false, errores: ['Complete todos lo campos correctamente.']})
+            res.json({success: false, errores: validation.error.details[0].message})
+            // validation.error.details.map((err) => {
+            //     res.json({success: false, errores: err.message})
+            //     console.log(err.message)
+            // })
+            // res.json({success: false, errores: ['Complete todos lo campos correctamente.']})
         }
     }
 }
